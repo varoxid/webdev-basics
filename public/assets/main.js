@@ -1,17 +1,5 @@
-function applyTheme(theme) {
-    document.body.className = theme;
-    localStorage.setItem('themePreference', theme);
-}
-
-function loadTheme() {
-    const savedTheme = localStorage.getItem('themePreference') || 'light';
-    applyTheme(savedTheme);
-    return savedTheme;
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-
-    loadTheme();
+    initTheme();
 
     const canvas = document.getElementById('paintCanvas');
     const ctx = canvas.getContext('2d');

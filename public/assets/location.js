@@ -3,32 +3,17 @@ let userMarker;
 let userLocation = null;
 const userMarkers = {};
 let ws;
-let map;
 
 //TODO: generate colors
 const userColors = [
     '#FFAB40', '#FF4081', '#FFAB40', '#7C4DFF'
 ];
 
-function applyTheme(theme) {
-    document.body.className = theme;
-    localStorage.setItem('themePreference', theme);
-}
-
-function loadTheme() {
-    const savedTheme = localStorage.getItem('themePreference') || 'light';
-    applyTheme(savedTheme);
-    return savedTheme;
-}
-
 function initLocationPage() {
-    const savedTheme = localStorage.getItem('themePreference') || 'light';
-    document.body.className = savedTheme;
-    
-    loadTheme();
+    initTheme();
     initMap();
-    connectWebSocket();
-    requestGeolocation();
+    initWsConnection();
+    resolveGeolocation();
 }
 
 function initMap() {
@@ -46,7 +31,7 @@ function initMap() {
     });
 }
 
-function connectWebSocket() {
+function initWsConnection() {
     ws = new WebSocket(`ws://${window.location.hostname}:8888`);
     
     ws.onopen = () => {
@@ -68,7 +53,7 @@ function connectWebSocket() {
     };
 }
 
-function requestGeolocation() {
+function resolveGeolocation() {
     const statusElement = document.getElementById('locationStatus');
     
     if (!navigator.geolocation) {
@@ -98,7 +83,7 @@ function requestGeolocation() {
                 }));
             }
             
-            updateMarker(latitude, longitude);
+            upsertMarker(latitude, longitude);
         },
         (error) => {
             console.error("Geolocation error:", error);
@@ -111,24 +96,13 @@ function requestGeolocation() {
     );
 }
 
-function updateMarker(lat, lng) {
-    const coords = ol.proj.fromLonLat([lng, lat]);
+function upsertMarker(lattitude, longitude) {
+    const coordinates = ol.proj.fromLonLat([longitude, lattitude]);
     
-    if (!userMarker) {
-        const userColor = getUserColor(localStorage.getItem('userId'));
-        userMarker = new ol.Feature({
-            geometry: new ol.geom.Point(coords)
-        });
-        
-        const markerStyle = new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: 8,
-                fill: new ol.style.Fill({ color: userColor }),
-                stroke: new ol.style.Stroke({ color: '#000', width: 1 })
-            })
-        });
-        
-        userMarker.setStyle(markerStyle);
+    if(userMarker) {
+        userMarker.getGeometry().setCoordinates(coordinates);
+    } else {
+        userMarker = createMarker(coordinates)
         
         const vectorSource = new ol.source.Vector({
             features: [userMarker]
@@ -139,15 +113,36 @@ function updateMarker(lat, lng) {
         });
         
         userMap.addLayer(vectorLayer);
-    } else {
-        userMarker.getGeometry().setCoordinates(coords);
     }
     
-    userMap.getView().setCenter(coords);
+    userMap.getView().setCenter(coordinates);
+}
+
+function createMarker(coords) {
+    const marker = new ol.Feature({
+        geometry: new ol.geom.Point(coords)
+    });
+
+    marker.setStyle(createMarkerStyle());
+
+    return marker; 
+}
+
+function createMarkerStyle() {
+    const userColor = getUserColor(localStorage.getItem('userId'));
+    return new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 8,
+            fill: new ol.style.Fill({ color: userColor }),
+            stroke: new ol.style.Stroke({ color: '#000', width: 1 })
+        })
+    });
 }
 
 function updateUserLocation(userId, location, color) {
-    if (!userMarkers[userId]) {
+    if(userMarkers[userId]) {
+        userMarkers[userId].setLatLng([location.latitude, location.longitude]);
+    } else {
         userMarkers[userId] = L.circleMarker(
             [location.latitude, location.longitude], 
             {
@@ -159,11 +154,9 @@ function updateUserLocation(userId, location, color) {
         ).addTo(userMap);
         
         userMarkers[userId].bindPopup(`User ${userId.slice(0, 6)}`);
-    } else {
-        userMarkers[userId].setLatLng([location.latitude, location.longitude]);
     }
     
-    updateUsersList();
+    updateUserList();
 }
 
 function removeUserMarker(userId) {
@@ -171,10 +164,10 @@ function removeUserMarker(userId) {
         userMap.removeLayer(userMarkers[userId]);
         delete userMarkers[userId];
     }
-    updateUsersList();
+    updateUserList();
 }
 
-function updateUsersList() {
+function updateUserList() {
     const usersList = document.getElementById('usersList');
     usersList.innerHTML = '';
     
@@ -184,6 +177,8 @@ function updateUsersList() {
         
         const userItem = document.createElement('div');
         userItem.className = 'user-item';
+        
+        // TODO: remove hardcoded html
         userItem.innerHTML = `
             <div class="user-color" style="background-color: ${color};"></div>
             <div>

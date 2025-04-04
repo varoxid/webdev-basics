@@ -1,5 +1,5 @@
 
-function loadSettings() {
+function initSettings() {
     const savedSettings = localStorage.getItem('paintSettings');
     if (savedSettings) {
         const settings = JSON.parse(savedSettings);
@@ -32,28 +32,16 @@ function saveSettings() {
     localStorage.setItem('paintSettings', JSON.stringify(settings));
 }
 
-function applyTheme(theme) {
-    document.body.className = theme;
-    localStorage.setItem('themePreference', theme);
-}
-
-function loadTheme() {
-    const savedTheme = localStorage.getItem('themePreference') || 'light';
-    applyTheme(savedTheme);
-    return savedTheme;
-}
-
 function initSettingsPage() {
-    loadSettings();
+    initSettings();
 
     const themeSelector = document.getElementById('theme');
-    const currentTheme = loadTheme();
+    const currentTheme = initTheme();
     themeSelector.value = currentTheme;
     
     themeSelector.addEventListener('change', (e) => {
         applyTheme(e.target.value);
     });
-    
 
     document.getElementById('lineWidth').addEventListener('input', (e) => {
         document.getElementById('widthValue').textContent = e.target.value;
@@ -71,7 +59,7 @@ function initSettingsPage() {
     
     document.getElementById('resetBtn').addEventListener('click', () => {
         localStorage.clear();
-        loadSettings();
+        initSettings();
         alert('Settings reset');
     });
 }

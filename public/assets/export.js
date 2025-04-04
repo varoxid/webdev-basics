@@ -1,19 +1,5 @@
-function applyTheme(theme) {
-    document.body.className = theme;
-    localStorage.setItem('themePreference', theme);
-}
-
-function loadTheme() {
-    const savedTheme = localStorage.getItem('themePreference') || 'light';
-    applyTheme(savedTheme);
-    return savedTheme;
-}
-
 function initExportPage() {
-    const savedTheme = localStorage.getItem('themePreference') || 'light';
-    document.body.className = savedTheme;
- 
-    loadTheme();
+    initTheme();
 
     const loadBtn = document.getElementById('loadBtn');
     const exportBtn = document.getElementById('exportBtn');
@@ -22,13 +8,15 @@ function initExportPage() {
     const previewCtx = previewCanvas.getContext('2d');
     const previewPlaceholder = document.getElementById('previewPlaceholder');
     
+    //TODO: move to settings
     previewCanvas.width = 800;
     previewCanvas.height = 500;
     
     loadBtn.addEventListener('click', () => {
-        const savedCanvas = localStorage.getItem('savedCanvas');
+        const storedCanvas = localStorage.getItem('savedCanvas');
         
-        if (savedCanvas) {
+        //TODO: move to function
+        if (storedCanvas) {
             const img = new Image();
             img.onload = () => {
                 previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
@@ -49,7 +37,7 @@ function initExportPage() {
                 
                 exportBtn.disabled = false;
             };
-            img.src = savedCanvas;
+            img.src = storedCanvas;
         } else {
             alert('No images in local storage');
         }
@@ -57,7 +45,7 @@ function initExportPage() {
     
     exportBtn.addEventListener('click', () => {
         const link = document.createElement('a');
-        link.download = `multipaint-${new Date().toISOString().slice(0,10)}.jpg`;
+        link.download = `image-${new Date().toISOString().slice(0,10)}.jpg`;
         link.href = previewCanvas.toDataURL('image/jpeg', 0.9);
         document.body.appendChild(link);
         link.click();
