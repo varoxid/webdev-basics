@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MultiPaint project</h1>
+            <nav>
+                <a href="index.html" class="btn">Home</a>
+                <a href="settings.html" class="btn">Settings</a>
+                <a href="export.html" class="btn">Export</a>
+                <a href="location.html" class="btn">Geolocation</a>
+                <a href="about.html" class="btn">About</a>
+            </nav>
+        </header>
+
+        <main class="about-content">
+            <section>
+                <h2>Description</h2>
+                <p>MultiPaint is a multi-user web application for real-time collaborative drawing.</p>
+                <p>Key features:</p>
+                <ul>
+                    <li>Co-drawing with other users</li>
+                    <li>Custom drawing settings</li>
+                    <li>Selecting design themes</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Technologies:</h2>
+                <ul>
+                    <li><strong>HTML5</strong></li>
+                    <li><strong>Canvas API</strong></li>
+                    <li><strong>WebSockets</strong></li>
+                    <li><strong>WebStorage</strong></li>
+                    <li><strong>File API</strong></li>
+                    <li><strong>Geolocation API</strong></li>
+                </ul>
+            </section>
+
+            <section class="audio-section">
+                <audio id="audio" src="assets/sounds/about.mp3" controls loop></audio>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2025 MultiPaint</p>
+        </footer>
+    </div>
+
+    <script src="assets/about.js"></script>
+</body>
+</html>

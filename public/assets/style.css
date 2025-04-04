@@ -1,0 +1,359 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--panel-bg);
+    border-color: var(--panel-border);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+h1 {
+    color: var(--header-color);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.paint-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.tools-panel {
+    padding: 15px;
+    background: var(--toolbar-bg);
+    color: var(--toolbar-text);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.tool-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tool-group label {
+    font-weight: bold;
+}
+
+.canvas-wrapper {
+    padding: 20px;
+    text-align: center;
+}
+
+canvas {
+    background: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.user-count {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.btn {
+    padding: 8px 15px;
+    background: var(--btn-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: var(--btn-hover);
+}
+
+.settings-form {
+    background-color: var(--panel-bg);
+    border-color: var(--panel-border);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="color"],
+.form-group input[type="range"],
+.form-group select,
+.form-group input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group input[type="checkbox"] {
+    margin-left: 10px;
+}
+
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .tools-panel {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    canvas {
+        width: 100%;
+        height: auto;
+        background: var(--canvas-bg);
+    }
+}
+
+.info-panel {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    width: 200px;
+    background-color: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    user-select: none;
+}
+
+.info-panel-header {
+    padding: 8px 12px;
+    background-color: var(--toolbar-bg);
+    color: var(--toolbar-text);
+    cursor: move;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-panel-content {
+    padding: 12px;
+    font-size: 14px;
+}
+
+.info-panel-content div {
+    margin-bottom: 8px;
+}
+
+.close-panel {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.close-panel:hover {
+    color: #ff5555;
+}
+
+body.light {
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --panel-bg: white;
+    --panel-border: #ddd;
+    --header-color: #2c3e50;
+    --toolbar-bg: #2c3e50;
+    --toolbar-text: white;
+    --btn-bg: #3498db;
+    --btn-hover: #2980b9;
+    --canvas-bg: white;
+}
+
+body.dark {
+    --bg-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --panel-bg: #2d2d2d;
+    --panel-border: #444;
+    --header-color: #4a90e2;
+    --toolbar-bg: #1e1e1e;
+    --toolbar-text: #e0e0e0;
+    --btn-bg: #4a90e2;
+    --btn-hover: #3a7bc8;
+    --canvas-bg: #333;
+}
+
+.about-content {
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.about-content section {
+    margin-bottom: 30px;
+}
+
+.about-content h2 {
+    color: var(--header-color);
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--panel-border);
+    padding-bottom: 5px;
+}
+
+.about-content ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.about-content li {
+    margin-bottom: 8px;
+}
+
+.audio-section {
+    background-color: var(--panel-bg);
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 30px;
+}
+
+.audio-note {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 5px;
+}
+
+footer {
+    margin-top: 30px;
+    text-align: center;
+    padding: 15px;
+    border-top: 1px solid var(--panel-border);
+    font-size: 0.9em;
+    color: #666;
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+}
+
+.export-container h2 {
+    color: var(--header-color);
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--panel-border);
+    padding-bottom: 5px;
+}
+
+.export-container p {
+    margin-bottom: 20px;
+}
+
+.export-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.preview-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#imagePreview {
+    max-width: 100%;
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.export-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.no-image {
+    padding: 20px;
+    background-color: var(--panel-bg);
+    border: 1px dashed var(--panel-border);
+    text-align: center;
+    color: #666;
+}
+
+.map-container {
+    margin: 20px 0;
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--panel-border);
+}
+
+#userMap {
+    height: 100%;
+    width: 100%;
+}
+
+.location-info {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--panel-bg);
+    border-radius: 5px;
+}
+
+.user-list {
+    margin-top: 20px;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: var(--panel-bg);
+    border-radius: 4px;
+}
+
+.user-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+#userMap {
+    height: 500px;
+    width: 100%;
+}

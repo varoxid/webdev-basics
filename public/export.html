@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export to JPG - MultiPaint</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Export to JPG</h1>
+            <nav>
+                <a href="index.html" class="btn">Main</a>
+                <a href="settings.html" class="btn">Settings</a>
+                <a href="export.html" class="btn">Export</a>
+                <a href="location.html" class="btn">Geolocation</a>
+                <a href="about.html" class="btn">About</a>
+            </nav>
+        </header>
+
+        <main class="export-container">
+            <h2>Image export to JPG</h2>
+            
+            <div class="preview-container">
+                <div id="previewPlaceholder" class="no-image">
+                    No images in Local Storage
+                </div>
+                <canvas id="imagePreview" style="display: none;"></canvas>
+            </div>
+            
+            <div class="export-actions">
+                <button id="loadBtn" class="btn">Load from Local Storage</button>
+                <button id="exportBtn" class="btn" disabled>Save as JPG</button>
+                <button id="clearBtn" class="btn">Clear Local Storage</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2023 MultiPaint Project.</p>
+        </footer>
+    </div>
+
+    <script src="assets/export.js"></script>
+</body>
+</html>

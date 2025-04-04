@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MultiPaint</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MultiPaint</h1>
+            <div class="user-info">
+                <span id="userNameDisplay">Anonymous</span>
+                <a href="index.html" class="btn">Home</a>
+                <a href="settings.html" class="btn">Settings</a>
+                <a href="export.html" class="btn">Export</a>
+                <a href="location.html" class="btn">Geolocation</a>
+                <a href="about.html" class="btn">About</a>
+            </div>
+        </header>
+        
+        <div class="paint-container">
+            <div class="tools-panel">
+                <div class="tool-group">
+                    <label for="color">Color:</label>
+                    <input type="color" id="color" value="#000000">
+                </div>
+                
+                <div class="tool-group">
+                    <label for="brushSize">Thickness:</label>
+                    <input type="range" id="brushSize" min="1" max="50" value="5">
+                    <span id="brushSizeValue">5</span>
+                </div>
+                
+                <div class="tool-group">
+                    <button id="clearBtn" class="btn">Clear</button>
+                </div>
+                
+                <div class="tool-group">
+                    <button id="saveBtn" class="btn">Save</button>
+                </div>
+            </div>
+            
+            <div class="canvas-wrapper">
+                <canvas id="paintCanvas" width="800" height="500"></canvas>
+            </div>
+        </div>
+
+        <div id="infoPanel" class="info-panel">
+            <div class="info-panel-header">
+                Info
+                <span class="close-panel">&times;</span>
+            </div>
+            <div class="info-panel-content">
+                <div>Online users: <span id="usersCount">1</span></div>
+                <div>Current time: <span id="currentTime">--:--:--</span></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 MultiPaint Project.</p>
+        </footer>
+    </div>
+
+    <script src="assets/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карта пользователей - MultiPaint</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <!-- todo: use type module remove direct dependencies-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.5.0/ol.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>User map</h1>
+            <nav>
+                <a href="index.html" class="btn">Home</a>
+                <a href="settings.html" class="btn">Settings</a>
+                <a href="export.html" class="btn">Export</a>
+                <a href="location.html" class="btn">Geolocation</a>
+                <a href="about.html" class="btn">About</a>
+            </nav>
+        </header>
+
+        <main class="location-container">
+            <div class="location-info">
+                <h2>Location</h2>
+                <div id="coordinates"></div>
+            </div>
+            
+            <div class="map-container">
+                <div id="userMap"></div>
+            </div>
+            
+            <div class="user-list">
+                <h3>Online users</h3>
+                <div id="usersList"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2023 MultiPaint Project.</p>
+        </footer>
+    </div>
+
+    <!-- todo: use type module remove direct dependencies-->
+    <script src="https://cdn.jsdelivr.net/npm/ol@v10.5.0/dist/ol.js"></script>
+    <script src="assets/location.js"></script>
+</body>
+</html>
