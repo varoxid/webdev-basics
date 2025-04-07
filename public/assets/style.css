@@ -90,6 +90,8 @@ canvas {
     cursor: pointer;
     font-size: 14px;
     transition: background 0.3s;
+    will-change: transform;
+    text-decoration: none;
 }
 
 .btn:hover {
