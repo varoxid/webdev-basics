@@ -357,3 +357,21 @@ nav {
     height: 500px;
     width: 100%;
 }
+
+details {
+    margin-bottom: 15px;
+    background-color: var(--panel-bg);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+summary h2, summary h3 {
+    display: inline-block;
+    margin: 0;
+    font-size: 1em;
+}
+
+details[open] summary {
+    border-bottom: 1px solid var(--panel-border);
+    margin-bottom: 10px;
+}
