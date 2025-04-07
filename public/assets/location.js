@@ -2,7 +2,7 @@ let userMap;
 let userMarker;
 let userLocation = null;
 const userMarkers = {};
-let ws;
+const ws = new WebSocket(`ws://${window.location.hostname}:8888`);
 
 //TODO: generate colors
 const userColors = [
@@ -32,8 +32,6 @@ function initMap() {
 }
 
 function initWsConnection() {
-    ws = new WebSocket(`ws://${window.location.hostname}:8888`);
-    
     ws.onopen = () => {
         console.log('Connected to WebSocket server');
     };
