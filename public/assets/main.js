@@ -9,7 +9,7 @@ function updateTime() {
 }
 
 function initInfoPanel(ws) {
-    const panel = getRequiredDOMElement('#infoPanel');
+    const panel = getRequiredDOMElement('#infoPanel2');
     const header = getRequiredDOMElement('.info-panel-header');
     const closeBtn = getRequiredDOMElement('.close-panel');
 
