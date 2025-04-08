@@ -5,11 +5,11 @@ const ws = new WebSocket(`ws://${window.location.hostname}:8888`);
 
 function updateTime() {
     const now = new Date();
-    document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+    document.querySelector('#currentTime').textContent = now.toLocaleTimeString();
 }
 
 function initInfoPanel(ws) {
-    const panel = document.getElementById('infoPanel');
+    const panel = document.querySelector('#infoPanel');
     const header = panel.querySelector('.info-panel-header');
     const closeBtn = panel.querySelector('.close-panel');
 
@@ -69,7 +69,7 @@ function initInfoPanel(ws) {
         const data = JSON.parse(event.data);
 
         if (data.type === 'users') {
-            document.getElementById('usersCount').textContent = data.count;
+            document.querySelector('#usersCount').textContent = data.count;
         }
     };
 }
@@ -125,7 +125,7 @@ function handleEvents(ctx, canvas, ws) {
         }
 
         if (data.type === 'users') {
-            document.getElementById('usersCount').textContent = data.count;
+            document.querySelector('#usersCount').textContent = data.count;
         }
     };
 }
@@ -154,11 +154,11 @@ function startDrawing(e) {
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
 
-    const canvas = document.getElementById('paintCanvas');
+    const canvas = document.querySelector('#paintCanvas');
     const ctx = canvas.getContext('2d');
-    const colorPicker = document.getElementById('color');
-    const brushSize = document.getElementById('brushSize');
-    const brushSizeValue = document.getElementById('brushSizeValue');
+    const colorPicker = document.querySelector('#color');
+    const brushSize = document.querySelector('#brushSize');
+    const brushSizeValue = document.querySelector('#brushSizeValue');
 
     const savedSettings = localStorage.getItem('paintSettings');
     if (savedSettings) {
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         brushSize.value = settings.lineWidth || 5;
         brushSizeValue.textContent = settings.lineWidth || 5;
         canvas.style.backgroundColor = settings.canvasBg || '#ffffff';
-        document.getElementById('userNameDisplay').textContent = settings.userName || 'Anonymous';
+        document.querySelector('#userNameDisplay').textContent = settings.userName || 'Anonymous';
     }
 
     initInfoPanel(ws);
@@ -185,14 +185,14 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.addEventListener('touchmove', handleTouchMove);
     canvas.addEventListener('touchend', stopDrawing);
 
-    document.getElementById('clearBtn').addEventListener('click', () => {
+    document.querySelector('#clearBtn').addEventListener('click', () => {
         if (confirm('Clear the canvas?')) {
             initCanvas(ctx, canvas);
             ws.send(JSON.stringify({ type: 'clear' }));
         }
     });
 
-    document.getElementById('saveBtn').addEventListener('click', () => {
+    document.querySelector('#saveBtn').addEventListener('click', () => {
         const dataURL = canvas.toDataURL('image/png');
         localStorage.setItem('savedCanvas', dataURL);
         alert('Saved in local storage');

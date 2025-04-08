@@ -1,6 +1,6 @@
 function handleLoadButtonEvent(previewCanvas) {
     const storedCanvas = localStorage.getItem('savedCanvas');
-    const previewPlaceholder = document.getElementById('previewPlaceholder');
+    const previewPlaceholder = document.querySelector('#previewPlaceholder');
     const previewCtx = previewCanvas.getContext('2d');
 
     if (storedCanvas) {
@@ -22,7 +22,7 @@ function handleLoadButtonEvent(previewCanvas) {
             previewCanvas.style.display = 'block';
             previewPlaceholder.style.display = 'none';
             
-            document.getElementById('exportBtn').disabled = false;
+            document.querySelector('#exportBtn').disabled = false;
         };
         img.src = storedCanvas;
     } else {
@@ -33,17 +33,17 @@ function handleLoadButtonEvent(previewCanvas) {
 function initExportPage() {
     initTheme();
 
-    const previewCanvas = document.getElementById('imagePreview');
+    const previewCanvas = document.querySelector('#imagePreview');
     
     //TODO: move to settings
     previewCanvas.width = 800;
     previewCanvas.height = 500;
     
-    document.getElementById('loadBtn').addEventListener('click', () => {
+    document.querySelector('#loadBtn').addEventListener('click', () => {
         handleLoadButtonEvent(previewCanvas);
     });
     
-    document.getElementById('exportBtn').addEventListener('click', () => {
+    document.querySelector('#exportBtn').addEventListener('click', () => {
         const link = document.createElement('a');
         link.download = `image-${new Date().toISOString().slice(0,10)}.jpg`;
         link.href = previewCanvas.toDataURL('image/jpeg', 0.9);
@@ -52,11 +52,11 @@ function initExportPage() {
         document.body.removeChild(link);
     });
     
-    document.getElementById('clearBtn').addEventListener('click', () => {
+    document.querySelector('#clearBtn').addEventListener('click', () => {
         localStorage.removeItem('savedCanvas');
         previewCanvas.style.display = 'none';
-        document.getElementById('previewPlaceholder').style.display = 'block';
-        document.getElementById('exportBtn').disabled = true;
+        document.querySelector('#previewPlaceholder').style.display = 'block';
+        document.querySelector('#exportBtn').disabled = true;
         alert('Local Storage cleared!');
     });
 }

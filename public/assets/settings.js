@@ -4,19 +4,19 @@ function initSettings() {
     if (savedSettings) {
         const settings = JSON.parse(savedSettings);
         
-        document.getElementById('defaultColor').value = settings.defaultColor;
-        document.getElementById('lineWidth').value = settings.lineWidth;
-        document.getElementById('widthValue').textContent = settings.lineWidth;
-        document.getElementById('brushMode').value = settings.brushMode;
-        document.getElementById('opacity').value = settings.opacity;
-        document.getElementById('opacityValue').textContent = settings.opacity;
-        document.getElementById('canvasBg').value = settings.canvasBg;
-        document.getElementById('userName').value = settings.userName || '';
+        document.querySelector('#defaultColor').value = settings.defaultColor;
+        document.querySelector('#lineWidth').value = settings.lineWidth;
+        document.querySelector('#widthValue').textContent = settings.lineWidth;
+        document.querySelector('#brushMode').value = settings.brushMode;
+        document.querySelector('#opacity').value = settings.opacity;
+        document.querySelector('#opacityValue').textContent = settings.opacity;
+        document.querySelector('#canvasBg').value = settings.canvasBg;
+        document.querySelector('#userName').value = settings.userName || '';
     }
 }
 
 function saveSettings() {
-    const form = document.getElementById('settingsForm');
+    const form = document.querySelector('#settingsForm');
     const formData = new FormData(form);
     
     const settings = {
@@ -35,7 +35,7 @@ function saveSettings() {
 function initSettingsPage() {
     initSettings();
 
-    const themeSelector = document.getElementById('theme');
+    const themeSelector = document.querySelector('#theme');
     const currentTheme = initTheme();
     themeSelector.value = currentTheme;
     
@@ -43,21 +43,21 @@ function initSettingsPage() {
         applyTheme(e.target.value);
     });
 
-    document.getElementById('lineWidth').addEventListener('input', (e) => {
-        document.getElementById('widthValue').textContent = e.target.value;
+    document.querySelector('#lineWidth').addEventListener('input', (e) => {
+        document.querySelector('#widthValue').textContent = e.target.value;
     });
     
-    document.getElementById('opacity').addEventListener('input', (e) => {
-        document.getElementById('opacityValue').textContent = e.target.value;
+    document.querySelector('#opacity').addEventListener('input', (e) => {
+        document.querySelector('#opacityValue').textContent = e.target.value;
     });
     
-    document.getElementById('settingsForm').addEventListener('submit', (e) => {
+    document.querySelector('#settingsForm').addEventListener('submit', (e) => {
         e.preventDefault();
         saveSettings();
         alert('Settings saved');
     });
     
-    document.getElementById('resetBtn').addEventListener('click', () => {
+    document.querySelector('#resetBtn').addEventListener('click', () => {
         localStorage.clear();
         initSettings();
         alert('Settings reset');
