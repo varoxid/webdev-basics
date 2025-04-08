@@ -3,7 +3,7 @@ const WEBSOCKET_PORT = 8888;
 window.onerror = (message) => {
     alert(`message: ${message}`);
     return true;
-  };
+};
 
 function applyTheme(theme) {
     document.body.className = theme;

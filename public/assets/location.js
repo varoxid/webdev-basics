@@ -12,7 +12,7 @@ const userColors = [
 function initLocationPage() {
     initTheme();
     initMap();
-    initWsConnection();
+    initWs();
     resolveGeolocation();
 }
 
@@ -31,7 +31,7 @@ function initMap() {
     });
 }
 
-function initWsConnection() {
+function initWs() {
     ws.onopen = () => {
         console.log('Connected to WebSocket server');
     };
@@ -45,6 +45,10 @@ function initWsConnection() {
             removeUserMarker(data.userId);
         }
     };
+
+    ws.onerror = (event) => {
+        console.error('Websocket error: ', event);
+    };
     
     ws.onclose = () => {
         console.log('Disconnected from WebSocket server');
@@ -52,13 +56,6 @@ function initWsConnection() {
 }
 
 function resolveGeolocation() {
-    const statusElement = getRequiredDOMElement('#locationStatus');
-    
-    if (!navigator.geolocation) {
-        statusElement.textContent = "Unsupported";
-        return;
-    }
-    
     navigator.geolocation.watchPosition(
         (position) => {
             const { latitude, longitude } = position.coords;
@@ -141,17 +138,17 @@ function updateUserLocation(userId, location, color) {
     if(userMarkers[userId]) {
         userMarkers[userId].setLatLng([location.latitude, location.longitude]);
     } else {
-        userMarkers[userId] = L.circleMarker(
-            [location.latitude, location.longitude], 
-            {
-                color: color,
-                fillColor: color,
-                fillOpacity: 0.6,
-                radius: 6
-            }
-        ).addTo(userMap);
-        
-        userMarkers[userId].bindPopup(`User ${userId.slice(0, 6)}`);
+        //TODO: fix undefined L
+        // userMarkers[userId] = L.circleMarker(
+        //     [location.latitude, location.longitude], 
+        //     {
+        //         color: color,
+        //         fillColor: color,
+        //         fillOpacity: 0.6,
+        //         radius: 6
+        //     }
+        // ).addTo(userMap);
+        // userMarkers[userId].bindPopup(`User ${userId.slice(0, 6)}`);
     }
     
     updateUserList();

@@ -151,6 +151,20 @@ function startDrawing(e) {
     isDrawing = true;
 }
 
+function initWs() {
+    ws.onopen = () => {
+        console.log('Connected to WebSocket server');
+    };
+
+    ws.onerror = (event) => {
+        console.error('Websocket error: ', event);
+    };
+    
+    ws.onclose = () => {
+        console.log('Disconnected from WebSocket server');
+    };
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
 
@@ -170,6 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         getRequiredDOMElement('#userNameDisplay').textContent = settings.userName || 'Anonymous';
     }
 
+    initWs();
     initInfoPanel(ws);
     handleEvents(ctx, canvas, ws);
     updateCanvas(ctx, canvas);
@@ -258,8 +273,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
         [lastX, lastY] = [currentX, currentY];
     }
-
-    ws.onclose = () => {
-        alert('The connection to the server has been lost');
-    };
 });
