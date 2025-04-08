@@ -1,9 +1,24 @@
 const WEBSOCKET_PORT = 8888;
+const WS = new WebSocket(`ws://${window.location.hostname}:${WEBSOCKET_PORT}`);
 
 window.onerror = (message) => {
     alert(`message: ${message}`);
     return true;
 };
+
+function initWs() {
+    WS.onopen = () => {
+        console.log('Connected to WebSocket server');
+    };
+
+    WS.onerror = (event) => {
+        console.error('Websocket error: ', event);
+    };
+    
+    WS.onclose = () => {
+        console.log('Disconnected from WebSocket server');
+    };
+}
 
 function applyTheme(theme) {
     document.body.className = theme;

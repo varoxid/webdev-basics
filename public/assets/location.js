@@ -2,7 +2,6 @@ let userMap;
 let userMarker;
 let userLocation = null;
 const userMarkers = {};
-const ws = new WebSocket(`ws://${window.location.hostname}:${WEBSOCKET_PORT}`);
 
 //TODO: generate colors
 const userColors = [
@@ -13,6 +12,7 @@ function initLocationPage() {
     initTheme();
     initMap();
     initWs();
+    handleEvents();
     resolveGeolocation();
 }
 
@@ -31,12 +31,8 @@ function initMap() {
     });
 }
 
-function initWs() {
-    ws.onopen = () => {
-        console.log('Connected to WebSocket server');
-    };
-    
-    ws.onmessage = (event) => {
+function handleEvents() {
+    WS.onmessage = (event) => {
         const data = JSON.parse(event.data);
         
         if (data.type === 'location') {
@@ -44,14 +40,6 @@ function initWs() {
         } else if (data.type === 'userDisconnected') {
             removeUserMarker(data.userId);
         }
-    };
-
-    ws.onerror = (event) => {
-        console.error('Websocket error: ', event);
-    };
-    
-    ws.onclose = () => {
-        console.log('Disconnected from WebSocket server');
     };
 }
 
@@ -64,13 +52,13 @@ function resolveGeolocation() {
             getRequiredDOMElement('#coordinates').textContent =
                 `Latitude: ${latitude.toFixed(4)}, Longitude: ${longitude.toFixed(4)}`;
             
-            if (ws && ws.readyState === WebSocket.OPEN) {
+            if (WS && WS.readyState === WebSocket.OPEN) {
                 const userId = localStorage.getItem('userId') || generateUserId();
                 localStorage.setItem('userId', userId);
                 
                 const userColor = getUserColor(userId);
                 
-                ws.send(JSON.stringify({
+                WS.send(JSON.stringify({
                     type: 'location',
                     userId,
                     location: userLocation,

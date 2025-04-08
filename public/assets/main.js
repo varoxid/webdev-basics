@@ -1,14 +1,13 @@
 let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
-const ws = new WebSocket(`ws://${window.location.hostname}:${WEBSOCKET_PORT}`);
 
 function updateTime() {
     const now = new Date();
     getRequiredDOMElement('#currentTime').textContent = now.toLocaleTimeString();
 }
 
-function initInfoPanel(ws) {
+function initInfoPanel() {
     const panel = getRequiredDOMElement('#infoPanel');
     const header = getRequiredDOMElement('.info-panel-header');
     const closeBtn = getRequiredDOMElement('.close-panel');
@@ -65,7 +64,7 @@ function initInfoPanel(ws) {
     setInterval(updateTime, 1500);
     updateTime();
 
-    ws.onmessage = (event) => {
+    WS.onmessage = (event) => {
         const data = JSON.parse(event.data);
 
         if (data.type === 'users') {
@@ -104,8 +103,8 @@ function getPosition(canvas, event) {
     return [x, y];
 }
 
-function handleEvents(ctx, canvas, ws) {
-    ws.onmessage = (event) => {
+function handleEvents(ctx, canvas) {
+    WS.onmessage = (event) => {
         const data = JSON.parse(event.data);
 
         if (data.type === 'draw') {
@@ -151,20 +150,6 @@ function startDrawing(e) {
     isDrawing = true;
 }
 
-function initWs() {
-    ws.onopen = () => {
-        console.log('Connected to WebSocket server');
-    };
-
-    ws.onerror = (event) => {
-        console.error('Websocket error: ', event);
-    };
-    
-    ws.onclose = () => {
-        console.log('Disconnected from WebSocket server');
-    };
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
 
@@ -185,8 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initWs();
-    initInfoPanel(ws);
-    handleEvents(ctx, canvas, ws);
+    initInfoPanel();
+    handleEvents(ctx, canvas);
     updateCanvas(ctx, canvas);
 
     canvas.addEventListener('mousedown', e => {
@@ -203,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     getRequiredDOMElement('#clearBtn').addEventListener('click', () => {
         if (confirm('Clear the canvas?')) {
             initCanvas(ctx, canvas);
-            ws.send(JSON.stringify({ type: 'clear' }));
+            WS.send(JSON.stringify({ type: 'clear' }));
         }
     });
 
@@ -226,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         draw(ctx, lastX, lastY, currentX, currentY, colorPicker.value, brushSize.value);
 
-        ws.send(JSON.stringify({
+        WS.send(JSON.stringify({
             type: 'draw',
             data: {
                 x1: lastX,
@@ -259,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         draw(ctx, lastX, lastY, currentX, currentY, colorPicker.value, brushSize.value);
 
-        ws.send(JSON.stringify({
+        WS.send(JSON.stringify({
             type: 'draw',
             data: {
                 x1: lastX,
