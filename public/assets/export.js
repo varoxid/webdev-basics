@@ -1,6 +1,6 @@
 function handleLoadButtonEvent(previewCanvas) {
     const storedCanvas = localStorage.getItem('savedCanvas');
-    const previewPlaceholder = getRequiredElement(document.querySelector('#previewPlaceholder'));
+    const previewPlaceholder = getRequiredDOMElement('#previewPlaceholder');
     const previewCtx = previewCanvas.getContext('2d');
 
     if (storedCanvas) {
@@ -22,7 +22,7 @@ function handleLoadButtonEvent(previewCanvas) {
             previewCanvas.style.display = 'block';
             previewPlaceholder.style.display = 'none';
             
-            getRequiredElement(document.querySelector('#exportBtn')).disabled = false;
+            getRequiredDOMElement('#exportBtn').disabled = false;
         };
         img.src = storedCanvas;
     } else {
@@ -33,17 +33,17 @@ function handleLoadButtonEvent(previewCanvas) {
 function initExportPage() {
     initTheme();
 
-    const previewCanvas = getRequiredElement(document.querySelector('#imagePreview'));
+    const previewCanvas = getRequiredDOMElement('#imagePreview');
     
     //TODO: move to settings
     previewCanvas.width = 800;
     previewCanvas.height = 500;
     
-    getRequiredElement(document.querySelector('#loadBtn')).addEventListener('click', () => {
+    getRequiredDOMElement('#loadBtn').addEventListener('click', () => {
         handleLoadButtonEvent(previewCanvas);
     });
     
-    getRequiredElement(document.querySelector('#exportBtn')).addEventListener('click', () => {
+    getRequiredDOMElement('#exportBtn').addEventListener('click', () => {
         const link = document.createElement('a');
         link.download = `image-${new Date().toISOString().slice(0,10)}.jpg`;
         link.href = previewCanvas.toDataURL('image/jpeg', 0.9);
@@ -52,11 +52,11 @@ function initExportPage() {
         document.body.removeChild(link);
     });
     
-    getRequiredElement(document.querySelector('#clearBtn')).addEventListener('click', () => {
+    getRequiredDOMElement('#clearBtn').addEventListener('click', () => {
         localStorage.removeItem('savedCanvas');
         previewCanvas.style.display = 'none';
-        getRequiredElement(document.querySelector('#previewPlaceholder')).style.display = 'block';
-        getRequiredElement(document.querySelector('#exportBtn')).disabled = true;
+        getRequiredDOMElement('#previewPlaceholder').style.display = 'block';
+        getRequiredDOMElement('#exportBtn').disabled = true;
         alert('Local Storage cleared!');
     });
 }

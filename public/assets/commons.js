@@ -16,3 +16,12 @@ function getRequiredElement(element) {
 
     alert('The element does not exists in the page.');
 }
+
+function getRequiredDOMElement(elementName) {
+    let element = document.querySelector(elementName);
+    if (element !== null) {
+        return element;
+    }
+
+    alert('The element does not exists in the page: name=' + elementName);
+}

@@ -52,7 +52,7 @@ function initWsConnection() {
 }
 
 function resolveGeolocation() {
-    const statusElement = getRequiredElement(document.querySelector('#locationStatus'));
+    const statusElement = getRequiredDOMElement('#locationStatus');
     
     if (!navigator.geolocation) {
         statusElement.textContent = "Unsupported";
@@ -64,7 +64,7 @@ function resolveGeolocation() {
             const { latitude, longitude } = position.coords;
             userLocation = { latitude, longitude };
             
-            getRequiredElement(document.querySelector('#coordinates')).textContent =
+            getRequiredDOMElement('#coordinates').textContent =
                 `Latitude: ${latitude.toFixed(4)}, Longitude: ${longitude.toFixed(4)}`;
             
             if (ws && ws.readyState === WebSocket.OPEN) {
@@ -166,7 +166,7 @@ function removeUserMarker(userId) {
 }
 
 function updateUserList() {
-    const usersList = getRequiredElement(document.querySelector('#usersList'));
+    const usersList = getRequiredDOMElement('#usersList');
     usersList.innerHTML = '';
     
     Object.keys(userMarkers).forEach(userId => {

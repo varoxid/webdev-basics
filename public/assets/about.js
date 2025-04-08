@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
 
-    let myAudio = getRequiredElement(document.querySelector('#audio'));
+    let myAudio = getRequiredDOMElement('#audio');
     myAudio.volume=0.05;
     myAudio.play()
 });

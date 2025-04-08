@@ -5,13 +5,13 @@ const ws = new WebSocket(`ws://${window.location.hostname}:8888`);
 
 function updateTime() {
     const now = new Date();
-    getRequiredElement(document.querySelector('#currentTime')).textContent = now.toLocaleTimeString();
+    getRequiredDOMElement('#currentTime').textContent = now.toLocaleTimeString();
 }
 
 function initInfoPanel(ws) {
-    const panel = getRequiredElement(document.querySelector('#infoPanel'));
-    const header = getRequiredElement(panel.querySelector('.info-panel-header'));
-    const closeBtn = getRequiredElement(panel.querySelector('.close-panel'));
+    const panel = getRequiredDOMElement('#infoPanel');
+    const header = getRequiredDOMElement('.info-panel-header');
+    const closeBtn = getRequiredDOMElement('.close-panel');
 
     let isDragging = false;
     let offsetX, offsetY;
@@ -69,7 +69,7 @@ function initInfoPanel(ws) {
         const data = JSON.parse(event.data);
 
         if (data.type === 'users') {
-            getRequiredElement(document.querySelector('#usersCount')).textContent = data.count;
+            getRequiredDOMElement('#usersCount').textContent = data.count;
         }
     };
 }
@@ -125,7 +125,7 @@ function handleEvents(ctx, canvas, ws) {
         }
 
         if (data.type === 'users') {
-            getRequiredElement(document.querySelector('#usersCount')).textContent = data.count;
+            getRequiredDOMElement('#usersCount').textContent = data.count;
         }
     };
 }
@@ -154,11 +154,11 @@ function startDrawing(e) {
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
 
-    const canvas = getRequiredElement(document.querySelector('#paintCanvas'));
+    const canvas = getRequiredDOMElement('#paintCanvas');
     const ctx = canvas.getContext('2d');
-    const colorPicker = getRequiredElement(document.querySelector('#color'));
-    const brushSize = getRequiredElement(document.querySelector('#brushSize'));
-    const brushSizeValue = getRequiredElement(document.querySelector('#brushSizeValue'));
+    const colorPicker = getRequiredDOMElement('#color');
+    const brushSize = getRequiredDOMElement('#brushSize');
+    const brushSizeValue = getRequiredDOMElement('#brushSizeValue');
 
     const savedSettings = localStorage.getItem('paintSettings');
     if (savedSettings) {
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         brushSize.value = settings.lineWidth || 5;
         brushSizeValue.textContent = settings.lineWidth || 5;
         canvas.style.backgroundColor = settings.canvasBg || '#ffffff';
-        getRequiredElement(document.querySelector('#userNameDisplay')).textContent = settings.userName || 'Anonymous';
+        getRequiredDOMElement('#userNameDisplay').textContent = settings.userName || 'Anonymous';
     }
 
     initInfoPanel(ws);
@@ -185,14 +185,14 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.addEventListener('touchmove', handleTouchMove);
     canvas.addEventListener('touchend', stopDrawing);
 
-    getRequiredElement(document.querySelector('#clearBtn')).addEventListener('click', () => {
+    getRequiredDOMElement('#clearBtn').addEventListener('click', () => {
         if (confirm('Clear the canvas?')) {
             initCanvas(ctx, canvas);
             ws.send(JSON.stringify({ type: 'clear' }));
         }
     });
 
-    getRequiredElement(document.querySelector('#saveBtn')).addEventListener('click', () => {
+    getRequiredDOMElement('#saveBtn').addEventListener('click', () => {
         const dataURL = canvas.toDataURL('image/png');
         localStorage.setItem('savedCanvas', dataURL);
         alert('Saved in local storage');
