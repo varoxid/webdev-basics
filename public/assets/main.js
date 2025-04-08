@@ -1,7 +1,7 @@
 let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
-const ws = new WebSocket(`ws://${window.location.hostname}:8888`);
+const ws = new WebSocket(`ws://${window.location.hostname}:${WEBSOCKET_PORT}`);
 
 function updateTime() {
     const now = new Date();

@@ -2,7 +2,7 @@ let userMap;
 let userMarker;
 let userLocation = null;
 const userMarkers = {};
-const ws = new WebSocket(`ws://${window.location.hostname}:8888`);
+const ws = new WebSocket(`ws://${window.location.hostname}:${WEBSOCKET_PORT}`);
 
 //TODO: generate colors
 const userColors = [

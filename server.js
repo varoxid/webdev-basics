@@ -3,12 +3,13 @@ const WebSocket = require('ws');
 const path = require('path');
 
 const app = express();
+const HOST = 'localhost';
 const PORT = 8888;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 const server = app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://${HOST}:${PORT}`);
 });
 
 const wss = new WebSocket.Server({ server });
