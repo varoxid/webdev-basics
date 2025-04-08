@@ -66,6 +66,10 @@ wss.on('connection', (ws) => {
     users.delete(ws);
     updateUserCount();
   });
+
+  ws.on('error', (event) => {
+    console.error(event);
+  });
 });
 
 function broadcast(message, excludeWs = null) {
