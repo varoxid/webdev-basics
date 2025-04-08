@@ -8,3 +8,11 @@ function initTheme() {
     applyTheme(savedTheme);
     return savedTheme;
 }
+
+function getRequiredElement(element) {
+    if (element !== null) {
+        return element;
+    }
+
+    alert('The element does not exists in the page.');
+}
